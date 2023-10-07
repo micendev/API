@@ -1,12 +1,12 @@
-const express = require('express') // require -> commonJS
-const crypto = require('node:crypto')
-const cors = require('cors')
+import express, { json } from 'express' // require -> commonJS
+import { randomUUID } from 'node:crypto'
+import cors from 'cors'
 
-const movies = require('./movies.json')
-const { validateMovie, validatePartialMovie } = require('./schemas/movies')
+import movies from './movies.json'
+import { validateMovie, validatePartialMovie } from './schemas/movies.js'
 
 const app = express()
-app.use(express.json())
+app.use(json())
 app.use(cors({
   origin: (origin, callback) => {
     const ACCEPTED_ORIGINS = [
@@ -64,7 +64,7 @@ app.post('/movies', (req, res) => {
 
   // en base de datos
   const newMovie = {
-    id: crypto.randomUUID(), // uuid v4
+    id: randomUUID(), // uuid v4
     ...result.data
   }
 
@@ -96,7 +96,7 @@ app.patch('/movies/:id', (req, res) => {
   }
 
   const { id } = req.params
-  const movieIndex = movies.findIndex(movie => movie.id === id)
+  const movieIndex = findIndex(movie => movie.id === id)
 
   if (movieIndex === -1) {
     return res.status(404).json({ message: 'Movie not found' })
