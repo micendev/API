@@ -31,5 +31,5 @@ export function validatePartialMovie (input) {
 
 // module.exports = {
 //   validateMovie,
-//   validatePartialMovie
+//   validatePartialMovie --no necesario
 // }
